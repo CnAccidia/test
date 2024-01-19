@@ -176,11 +176,13 @@ function GetCookie() {
     // }
     $.msg($.name, ``, `🎉 建行生活签到数据获取成功。`);
   } else if (/autoLogin/.test($request.url)) {
+    $.MID = $request.headers['MID'] || $request.headers['Mid'] || $request.headers['mid'];
     $.DeviceId = $request.headers['DeviceId'] || $request.headers['Deviceid'] || $request.headers['deviceid'];
     $.MBCUserAgent = $request.headers['MBC-User-Agent'] || $request.headers['Mbc-user-agent'] || $request.headers['mbc-user-agent'];
 
-    if ($.DeviceId && $.MBCUserAgent && $request.body) {
+    if ($.DeviceId && $.MID && $.MBCUserAgent && $request.body) {
       autoLoginInfo = {
+        "MID": $.MID,
         "DeviceId": $.DeviceId,
         "MBCUserAgent": $.MBCUserAgent,
         "Body": $request.body
@@ -216,7 +218,6 @@ async function autoLogin() {
           // {"newErrMsg":"未能处理您的请求。如有疑问，请咨询在线客服或致电95533","data":"","reqFlowNo":"","errCode":"0","errMsg":"session未失效,勿重复登录"}
           // $.token = $.getdata('JHSH_TOKEN');
           console.log(`${result?.errMsg}`);
-          console.log($.info.MID);
         } else {
           const set_cookie = response.headers['set-cookie'] || response.headers['Set-cookie'] || response.headers['Set-Cookie'];
           // !$.isNode() ? $.setdata($.token, 'JHSH_TOKEN') : '';  // 数据持久化
@@ -224,8 +225,6 @@ async function autoLogin() {
           if (new_cookie) {
             $.token = new_cookie[0];
             console.log(`✅ 刷新 session 成功!`);
-            console.log($.info.MID);
-            
             debug(new_cookie);
           } else {
             message += `❌ 账号 [${$.info?.USR_TEL ? hideSensitiveData($.info?.USR_TEL, 3, 4) : $.index}] 刷新 session 失败，请重新获取Cookie。\n`;
@@ -298,7 +297,6 @@ async function main() {
             console.log(JSON.stringify(data));
             text = `❌ 账号 [${$.info?.USR_TEL ? hideSensitiveData($.info?.USR_TEL, 3, 4) : $.index}] 签到失败，${data.errMsg}\n`;
             console.log(text);
-            console.log($.info.MID);
             message += text;
           }
         } else {
