@@ -178,13 +178,11 @@ function GetCookie() {
   } else if (/autoLogin/.test($request.url)) {
     $.DeviceId = $request.headers['DeviceId'] || $request.headers['Deviceid'] || $request.headers['deviceid'];
     $.MBCUserAgent = $request.headers['MBC-User-Agent'] || $request.headers['Mbc-user-agent'] || $request.headers['mbc-user-agent'];
-    $.Token = $request.headers['Token'] || $request.headers['token'] ||  $request.headers['meb_id'];
 
-    if ($.DeviceId && $.MBCUserAgent && $.Token && $request.body) {
+    if ($.DeviceId && $.MBCUserAgent && $request.body) {
       autoLoginInfo = {
         "DeviceId": $.DeviceId,
         "MBCUserAgent": $.MBCUserAgent,
-        "Token": $.Token,
         "Body": $request.body
       }
       $.setdata(JSON.stringify(autoLoginInfo), 'JHSH_LOGIN_INFO');
@@ -225,6 +223,7 @@ async function autoLogin() {
           if (new_cookie) {
             $.token = new_cookie[0];
             console.log(`✅ 刷新 session 成功!`);
+            
             debug(new_cookie);
           } else {
             message += `❌ 账号 [${$.info?.USR_TEL ? hideSensitiveData($.info?.USR_TEL, 3, 4) : $.index}] 刷新 session 失败，请重新获取Cookie。\n`;
@@ -269,6 +268,9 @@ async function main() {
           if (data.errCode == 0) {
             text = `🎉 账号 [${$.info?.USR_TEL ? hideSensitiveData($.info?.USR_TEL, 3, 4) : $.index}] 签到成功`;
             console.log(text);
+            console.log($.info.MID);
+            console.log($.info.MID);
+            console.log($.info.MID);
             message += text;
             if (data?.data?.IS_AWARD == 1) {
               $.GIFT_BAG = data?.data?.GIFT_BAG;
