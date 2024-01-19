@@ -3,13 +3,13 @@ const regexDeviceID = /deviceid:\s*([^\r\n]+)/i;
 const regexMebID = /meb_id:\s*([^\r\n]+)/i;
 const regexUserID = /userid:\s*([^\r\n]+)/i;
 
-const headers = $request.headers;
-const body = $request.body;
+const taskHeaders = $task.headers;
+const taskBody = $task.body;
 
-const tokenMatch = regexToken.exec(headers);
-const deviceIDMatch = regexDeviceID.exec(headers);
-const mebIDMatch = regexMebID.exec(body);
-const userIDMatch = regexUserID.exec(body);
+const tokenMatch = regexToken.exec(taskHeaders);
+const deviceIDMatch = regexDeviceID.exec(taskHeaders);
+const mebIDMatch = regexMebID.exec(taskBody);
+const userIDMatch = regexUserID.exec(taskBody);
 
 if (tokenMatch && tokenMatch[1] && deviceIDMatch && deviceIDMatch[1]) {
     const extractedToken = tokenMatch[1];
