@@ -1,6 +1,6 @@
-const url = $request.url;
+const body = $request.body;
 const regex = /SID=(\w+);USERID=(\w+);unb=(\w+);cookie2=(\w+);umt=(\w+);utdid=(\w+);token=(\w+);deviceId=(\w+)/;
-const match = url.match(regex);
+const match = body.match(regex);
 
 if (match) {
     const SID = match[1];
