@@ -12,6 +12,16 @@ if (match) {
     const token = match[7];
     const deviceId = match[8];
 
+    console.log("Matched parameters:");
+    console.log("SID:", SID);
+    console.log("USERID:", USERID);
+    console.log("unb:", unb);
+    console.log("cookie2:", cookie2);
+    console.log("umt:", umt);
+    console.log("utdid:", utdid);
+    console.log("token:", token);
+    console.log("deviceId:", deviceId);
+
     $done({
         headers: {
             "SID": SID,
@@ -25,5 +35,6 @@ if (match) {
         }
     });
 } else {
+    console.log("No match found in the request body.");
     $done({});
 }
