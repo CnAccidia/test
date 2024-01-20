@@ -176,13 +176,11 @@ function GetCookie() {
     // }
     $.msg($.name, ``, `🎉 建行生活签到数据获取成功。`);
   } else if (/autoLogin/.test($request.url)) {
-    $.MID = $request.headers['MID'] || $request.headers['Mid'] || $request.headers['mid'];
     $.DeviceId = $request.headers['DeviceId'] || $request.headers['Deviceid'] || $request.headers['deviceid'];
     $.MBCUserAgent = $request.headers['MBC-User-Agent'] || $request.headers['Mbc-user-agent'] || $request.headers['mbc-user-agent'];
 
-    if ($.DeviceId && $.MID && $.MBCUserAgent && $request.body) {
+    if ($.DeviceId && $.MBCUserAgent && $request.body) {
       autoLoginInfo = {
-        "MID": $.MID,
         "DeviceId": $.DeviceId,
         "MBCUserAgent": $.MBCUserAgent,
         "Body": $request.body
@@ -254,6 +252,7 @@ async function main() {
       "content-type": "application/json",
       "Cookie": $.token
     },
+    console.log($.token),
     // body: `{"ACT_ID":"${$.info.ACT_ID}","MEB_ID":"${$.info.MEB_ID}","USR_TEL":"${$.info.USR_TEL}","REGION_CODE":"${$.info.REGION_CODE}","chnlType":"${$.info.chnlType}","regionCode":"${$.info.regionCode}"}`,
     body: `{"ACT_ID":"${$.info.ACT_ID}","REGION_CODE":"${$.info.REGION_CODE}","chnlType":"${$.info.chnlType}","regionCode":"${$.info.regionCode}"}`
   }
